@@ -1,15 +1,19 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Threading;
 using System.Threading.Tasks;
 
 class Program
 {
     static readonly Random s_rnd = new Random();
+    static Stopwatch s;
 
     static async Task Main()
     {
+        s = new Stopwatch();
+        s.Start();
         Console.WriteLine($"You rolled {await GetDiceRollAsync()}");
     }
-
 
     static async ValueTask<int> GetDiceRollAsync()
     {
@@ -17,7 +21,7 @@ class Program
 
         int roll1 = await RollAsync();
         int roll2 = await RollAsync();
-        Console.WriteLine("Should be 2nd");
+        Console.WriteLine($"Should be 2nd {s.ElapsedMilliseconds}");
 
         return roll1 + roll2;
     }
